@@ -2,3 +2,4 @@
 .cache*
 *vcs.xml
 sample_data/*
+*.pyc

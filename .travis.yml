@@ -7,6 +7,6 @@ install:
   - pip install jsonschema
   - pip install requests
 script:
-  - pytest tests --cov=uniprot_variant_import
+  - pytest tests --cov=validator
 after_success:
   - codecov

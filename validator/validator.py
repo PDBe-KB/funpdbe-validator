@@ -18,6 +18,8 @@ License.
 import jsonschema
 import json
 import re
+import requests
+
 
 
 class Validator(object):
@@ -37,6 +39,7 @@ class Validator(object):
         self.schema = None
         self.json_data = None
         self.error_log = None
+        self.json_url = 'https://gitlab.ebi.ac.uk/pdbe-kb/funpdbe/funpdbe-schema/raw/master/funpdbe_schema.json'
 
     def load_json(self, path_to_file):
         """
@@ -46,13 +49,19 @@ class Validator(object):
         """
         self.json_data = self._parse_json(path_to_file)
 
-    def load_schema(self, path_to_schema):
+    def load_schema(self):
         """
-        Loads the FunPDBe schema
-        :param path_to_schema: String, path to FunPDBe schema
-        :return: None
+        Getting JSON schema
+        :return: JSON, schema or None
         """
-        self.schema = self._parse_json(path_to_schema)
+        response = requests.get(self.json_url)
+        if response.status_code == 404:
+            print('Schema not found')
+            return None
+        try:
+            self.schema = json.loads(response.text)
+        except ValueError as valerr:
+            print(valerr)
 
     def basic_checks(self):
         """

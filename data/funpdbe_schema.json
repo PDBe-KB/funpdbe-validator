@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "https://github.com/funpdbe-consortium/funpdbe_schema/blob/master/funpdbe_schema.v0.0.1.json",
+  "$id": "https://gitlab.ebi.ac.uk/pdbe-kb/funpdbe/funpdbe-schema/raw/master/funpdbe_schema.json",
   "title": "funpdbe_schema",
   "type": "object",
   "properties": {
@@ -20,9 +20,17 @@
       "type": "string",
       "description": "URL linking to the entry at the partner resource"
     },
+    "model_coordinates_url": {
+      "type": "string",
+      "description": "URL linking to a structural model at the partner resource"
+    },
+    "includes_het_groups": {
+      "type": "boolean",
+      "description": "Does this JSON include annotations of HET residues"
+    },
     "release_date": {
       "type": "string",
-      "description": "Release date of the annotation",
+      "description": "Release date of the annotation dd/mm/yyyy",
       "pattern": "^[0-3]*[0-9]/[0-1]*[0-9]/[1-2][0-9]{3}$"
     },
     "pdb_id": {
@@ -32,7 +40,8 @@
     },
     "additional_entry_annotations": {
       "type": "object",
-      "description": "Additional entry-level annotations"
+      "description": "Additional entry-level annotations",
+      "additionalProperties": true
     },
     "chains": {
       "type": "array",
@@ -45,7 +54,8 @@
           },
           "additional_chain_annotations": {
             "type": "object",
-            "description": "Additional chain-level annotations"
+            "description": "Additional chain-level annotations",
+            "additionalProperties": true
           },
           "residues": {
             "type": "array",
@@ -54,7 +64,7 @@
               "properties": {
                 "pdb_res_label": {
                   "type": "string",
-                  "description": "Residue index from the related PDB entry"
+                  "description": "Author residue index from the corresponding PDB entry (a.k.a. auth_seq_id)"
                 },
                 "aa_type": {
                   "type": "string",
@@ -63,7 +73,8 @@
                 },
                 "additional_residue_annotations": {
                   "type": "object",
-                  "description": "Additional residue-level annotations"
+                  "description": "Additional residue-level annotations",
+                  "additionalProperties": true
                 },
                 "site_data": {
                   "type": "array",
@@ -80,9 +91,8 @@
                       },
                       "confidence_score": {
                         "type": "number",
-                        "description": "Confidence level of the annotation (0-1)",
-                        "minimum": 0.0,
-                        "maximum": 1.0
+                        "description": "Confidence level of the annotation (0-1, except if the method justifies otherwise)",
+                        "minimum": 0.0
                       },
                       "confidence_classification": {
                         "type": "string",
@@ -91,14 +101,22 @@
                           "high",
                           "medium",
                           "low",
-                          "null"
+                          "null",
+                          "curated"
                         ]
+                      },
+                      "aa_variant": {
+                        "type": "string",
+                        "description": "Three-letter amino acid code of variant/mutant",
+                        "pattern": "^[A-Za-z0-9]+$"
+                      },
+                      "aa_variant_causes": {
+                        "type": "string",
+                        "description": "The reason behind classifying a variant benign or damaging"
                       }
                     },
                     "required": [
                       "site_id_ref",
-                      "raw_score",
-                      "confidence_score",
                       "confidence_classification"
                     ],
                     "additionalProperties": false
@@ -140,6 +158,10 @@
             "type": "string",
             "description": "Site label"
           },
+          "site_url": {
+            "type": "string",
+            "description": "URL linking to information on the functional site at the partner resource"
+          },
           "source_database": {
             "type": "string",
             "description": "Name of the source database"
@@ -153,9 +175,14 @@
             "description": "Date of acquiring data from source",
             "pattern": "^[0-3]*[0-9]/[0-1]*[0-9]/[1-2][0-9]{3}$"
           },
+          "source_version": {
+            "type": "string",
+            "description": "Version of the data source"
+          },
           "additional_site_annotations": {
             "type": "object",
-            "description": "Additional site-level annotations"
+            "description": "Additional site-level annotations",
+            "additionalProperties": true
           }
         },
         "required": [

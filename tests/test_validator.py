@@ -65,7 +65,7 @@ class TestValidator(unittest.TestCase):
     def test_json_validation(self):
         validator = Validator("ProKinO")
         validator.load_json("data/test_data.json")
-        validator.load_schema("data/funpdbe_schema.json")
+        validator.load_schema()
         validation = validator.validate_against_schema()
         self.assertTrue(validation)
         validator.load_json("data/test_data_invalid.json")

@@ -1,6 +1,10 @@
 FunPDBe JSON Validator
 ======================
 
+[![Build Status](https://travis-ci.com/PDBe-KB/funpdbe-validator.svg?branch=master)](https://travis-ci.com/PDBe-KB/funpdbe-validator)
+[![codecov](https://codecov.io/gh/PDBe-KB/funpdbe-validator/branch/master/graph/badge.svg?token=MQMUUE5DJO)](https://codecov.io/gh/PDBe-KB/funpdbe-validator)
+[![Maintainability](https://api.codeclimate.com/v1/badges/583ee28bcdc5d62a2b1e/maintainability)](https://codeclimate.com/github/PDBe-KB/funpdbe-validator/maintainability)
+
 This Python3 client can be used for validating FunPDBe JSON files. It performs various sanity checks, and validates user JSONs against the FunPDBe schema.
 
 For more information on FunPDBe is, visit https://funpdbe.org
